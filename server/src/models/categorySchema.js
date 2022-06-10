@@ -7,6 +7,5 @@ const categorySchema=mongoose.Schema(
         versionKey:false
     }
 )
-
 const Category=mongoose.model("category",categorySchema);
 module.exports=Category

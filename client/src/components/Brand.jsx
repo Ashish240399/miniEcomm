@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import {Link} from "react-router-dom"
 function Brand() {
     const [brand,setBrand]=useState(
         {
@@ -31,7 +31,7 @@ function Brand() {
             <input id="brand_name" onChange={handleChange} type="text" placeholder='Create New Brand'/>
             <input type='submit'/>
         </form>
-        
+        <div><Link to="/all_brands"><button>Show All Brands</button></Link></div>
     </div>
   )
 }

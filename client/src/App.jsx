@@ -8,6 +8,7 @@ import UserProfile from './components/UserProfile';
 import Category from './components/Category';
 import Brand from './components/Brand';
 import Home from './components/Home';
+import AllBrands from './components/AllBrands';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/user" element={<UserProfile/>}></Route>
         <Route path="/category" element={<Category/>}></Route>
         <Route path="/brand" element={<Brand/>}></Route>
+        <Route path="/all_brands" element={<AllBrands/>}></Route>
       </Routes>
       
     </div>

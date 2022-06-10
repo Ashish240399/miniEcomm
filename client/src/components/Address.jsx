@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 
 function Address() {
+  const [adding,setAdding]=useState(false)
   let user=JSON.parse(localStorage.getItem("user"));
   const [finalAdd,setFinalAdd]=useState("")
   const [add,setAdd]=useState({
@@ -31,19 +33,27 @@ function Address() {
       const data=await fetch(`http://localhost:5000/address/${user[0]._id}`);
       const res=await data.json();
       
-      setFinalAdd(res[0]._id);
-      
+      setFinalAdd(res[res.length-1]._id);
+      setAdding(true)
     })
-    .then(async()=>{
-      fetch(`http://localhost:5000/users/${user[0]._id}/address/${finalAdd}`,{
+  }
+  function addingToUser(){
+    fetch(`http://localhost:5000/users/${user[0]._id}/address/${finalAdd}`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
         },
         // body:JSON.stringify(finalAdd)
+      }).then(()=>{
+        setAdding(false)
       })
-    })
+      
   }
+  useEffect(()=>{
+    if(adding==true){
+      addingToUser()
+    }
+  })
   return (
     <div>
       <form onSubmit={handleSubmit} action="">

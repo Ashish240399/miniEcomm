@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Address from './Address'
 import Cart from './Cart'
+import ShowAddress from './ShowAddress'
 
 function UserProfile() {
     const [page,setPage]=useState("")
@@ -11,8 +12,11 @@ function UserProfile() {
         }}>Cart</button>
         <button onClick={()=>{
             setPage("address")
-        }}>Address</button>
-        {page=="cart"?<Cart/>:page=="address"?<Address/>:null}
+        }}>Add Address</button>
+        <button onClick={()=>{
+          setPage("show-address")
+        }}>Show Address</button>
+        {page=="cart"?<Cart/>:page=="address"?<Address/>:page=="show-address"?<ShowAddress/>:null}
     </div>
   )
 }

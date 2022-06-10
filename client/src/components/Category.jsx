@@ -7,7 +7,6 @@ function Category() {
     async function addCategory(e){
         e.preventDefault();
         console.log(category)
-        //console.log("brand",brand);
         await fetch("http://localhost:5000/category",{
             method:"POST",
             headers:{

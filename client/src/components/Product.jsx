@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 function Product() {
+    const [brand,setBrand]=useState();
+    const [go,setGo]=useState(false)
     const [product,setProduct]=useState({
         brandId:"",
         title:"",
@@ -37,47 +39,47 @@ function Product() {
                 el.image==product.image
             }))
             setProductId(arr[0]._id)
-        })
-        .then(async()=>{
-            try {
-                console.log(productId,product.brandId)
-                await fetch(`http://localhost:5000/brand/${product.brandId}/product/${productId}`,{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    }
-                })
-            } catch (error) {
-                console.log(error)
-            }
-            
-        })
-        .then(async()=>{
-            try {
-                await fetch(`http://localhost:5000/category/${product.categoryId}/product/${productId}`,{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    }
-                })
-            } catch (error) {
-                console.log(error)
-            }
-            
+            setGo(true)
         })
     }
-    //console.log(productId)
+    function addToBrand(){
+        fetch(`http://localhost:5000/category/${product.categoryId}/product/${productId}`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        fetch(`http://localhost:5000/brand/${product.brandId}/product/${productId}`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        setGo(false)
+    }
+    useEffect(()=>{
+        if(go==true){
+            addToBrand()
+        }
+    })
+    const getBrand=async()=>{
+        const data=await fetch("http://localhost:5000/brand");
+        const res=await data.json();
+        setBrand(res)
+    }
+    useEffect(()=>{
+        getBrand()
+    },[])
+    console.log(brand)
   return (
     <div>
         <div>
             <form onSubmit={handleSubmit} action="">
                 <select onChange={handleChange} id="brandId">
                     <option>Brands</option>
-                    <option value="62a24be42650012d63788a10">Nike</option>
-                    <option value="62a24bff2650012d63788a13">Puma</option>
-                    <option value="62a24c0d2650012d63788a16">Adidas</option>
-                    <option value="62a24c142650012d63788a18">Campus</option>
-                    <option value="62a24c192650012d63788a1a">HRX</option>
+                    {brand!==undefined && brand.map((el)=>(
+                        <option value={el._id}>{el.brand_name}</option>
+                    ))}
                 </select>
                 <input onChange={handleChange} id="title" type="text" placeholder='Title'/>
                 <input onChange={handleChange} id="image" type="text" placeholder='Image'/>
