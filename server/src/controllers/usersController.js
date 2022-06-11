@@ -21,7 +21,7 @@ router.get("/",async(req,res)=>{
 })
 router.get("/:id",async(req,res)=>{
     try {
-        const user=await User.findById(req.params.id).populate({path:"address"}).lean().exec();
+        const user=await User.findById(req.params.id).populate({path:"address cart_item"}).lean().exec();
         return res.status(200).send(user)
     } catch (error) {
         return res.status(400).send(error)
@@ -38,10 +38,9 @@ router.post("/:id/address/:add_id",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
-router.patch("/:id/cart/:product_id",async(req,res)=>{
+router.post("/:id/add_to_cart/:product_id",async(req,res)=>{
     try {
-        const product=await Product.findById(req.params.product_id);
-        console.log(product)
+        const product=await Product.findById(req.params.product_id)
         const user=await User.updateOne({_id:req.params.id},{$push:{cart_item:product}});
         console.log(user)
         return res.send(user)
@@ -49,6 +48,15 @@ router.patch("/:id/cart/:product_id",async(req,res)=>{
         return res.send(error)
     }
 })
+// router.delete("/:id/delete/:product_id",async(req,res)=>{
+//     try {
+//         const product=req.params.product_id
+//         const user=await User.findByIdAndUpdate(req.params.id,
+//             {$pull:{"cart_item.$._id"}})
+//     } catch (error) {
+//         return res.send(error)
+//     }
+// })
 router.patch("/:id/address/idx/edit",async(req,res)=>{
     try {
         const user=await User.findByIdAndUpdate(req.params.id,req.body,{new:true}).lean().exec();

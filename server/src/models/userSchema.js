@@ -5,6 +5,8 @@ const userSchema=mongoose.Schema({
     password:{type:String,required:true},
     address:[{type:mongoose.Schema.Types.ObjectId,ref:"address",required:false}],
     cart_item:[{type:mongoose.Schema.Types.ObjectId,ref:"product",required:false}],
+    ordered_item:[{type:mongoose.Schema.Types.ObjectId,ref:"product",required:false}],
+    
 },{
     versionKey:false,
     timestamps:true

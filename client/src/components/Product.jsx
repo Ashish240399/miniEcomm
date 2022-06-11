@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react'
 
 function Product() {
     const [brand,setBrand]=useState();
+    const [category,setCategory]=useState();
+    const [position,setPosition]=useState()
+    const [type,setType]=useState()
     const [go,setGo]=useState(false)
     const [product,setProduct]=useState({
         brandId:"",
         title:"",
         image:"",
         price:"",
-        categoryId:""
+        categoryId:"",
+        positionId:"",
+        typeId:""
     })
     const [productId,setProductId]=useState("")
     function handleChange(e){
@@ -17,7 +22,6 @@ function Product() {
             [e.target.id]:e.target.value
         })
     }
-    //console.log(product)
     function handleSubmit(e){
         e.preventDefault();
         console.log(product)
@@ -36,19 +40,21 @@ function Product() {
                 el.categoryId==product.categoryId &&
                 el.title==product.title &&
                 el.price==product.price &&
-                el.image==product.image
+                el.image==product.image &&
+                el.typeId==product.typeId &&
+                el.positionId==product.positionId
             }))
             setProductId(arr[0]._id)
             setGo(true)
         })
     }
     function addToBrand(){
-        fetch(`http://localhost:5000/category/${product.categoryId}/product/${productId}`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            }
-        })
+        // fetch(`http://localhost:5000/category/${product.categoryId}/product/${productId}`,{
+        //     method:"POST",
+        //     headers:{
+        //         "Content-Type":"application/json"
+        //     }
+        // })
         fetch(`http://localhost:5000/brand/${product.brandId}/product/${productId}`,{
             method:"POST",
             headers:{
@@ -67,10 +73,28 @@ function Product() {
         const res=await data.json();
         setBrand(res)
     }
+    const getCategory=async()=>{
+        const data=await fetch("http://localhost:5000/category");
+        const res=await data.json();
+        setCategory(res)
+    }
+    const getPosition=async()=>{
+        const data=await fetch("http://localhost:5000/position");
+        const res=await data.json();
+        setPosition(res)
+    }
+    const getType=async()=>{
+        const data=await fetch("http://localhost:5000/type");
+        const res=await data.json();
+        setType(res)
+    }
     useEffect(()=>{
         getBrand()
+        getCategory()
+        getPosition()
+        getType()
     },[])
-    console.log(brand)
+    console.log(brand,category,position,type)
   return (
     <div>
         <div>
@@ -86,12 +110,21 @@ function Product() {
                 <input onChange={handleChange} id="price" type="text" placeholder='Price'/>
                 <select onChange={handleChange} id="categoryId">
                     <option>Category</option>
-                    <option value="62a24bc32650012d63788a0a">T-Shirt</option>
-                    <option value="62a24c332650012d63788a1d">Pants</option>
-                    <option value="62a24c422650012d63788a1f">Caps</option>
-                    <option value="62a24c4e2650012d63788a21">Nickers</option>
-                    <option value="62a24c532650012d63788a23">Slipers</option>
-                    <option value="62a250022650012d63788a26">Shoes</option>
+                    {category!==undefined && category.map((el)=>(
+                        <option value={el._id}>{el.category_name}</option>
+                    ))}
+                </select>
+                <select onChange={handleChange} id="positionId">
+                    <option>Position</option>
+                    {position!==undefined && position.map((el)=>(
+                        <option value={el._id}>{el.wear_part}</option>
+                    ))}
+                </select>
+                <select onChange={handleChange} id="typeId">
+                    <option>Type</option>
+                    {type!==undefined && type.map((el)=>(
+                        <option value={el._id}>{el.type_name}</option>
+                    ))}
                 </select>
                 <input type="submit" />
             </form>
