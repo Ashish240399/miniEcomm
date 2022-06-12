@@ -1,6 +1,6 @@
 const express=require("express");
 const Category = require("../models/categorySchema");
-const { findById } = require("../models/productSchema");
+
 const router=express.Router();
 const Product=require("../models/productSchema");
 const Type = require("../models/typeSchema");

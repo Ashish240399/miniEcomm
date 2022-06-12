@@ -6,6 +6,7 @@ function Home() {
     const [category,setCategory]=useState();
     const [position,setPosition]=useState()
     const [type,setType]=useState()
+    const [cartId,setCartId]=useState("");
     const [filtering,setFiltering]=useState({
         categoryId:"",
         positionId:"",
@@ -33,7 +34,7 @@ function Home() {
         const res=await data.json();
         setType(res)
     }
-    console.log(data)
+    //console.log(data)
     function handleChange(e){
         setFiltering({
             ...filtering,
@@ -77,14 +78,37 @@ function Home() {
         setData(res)
     }
     async function addToCart(id){
-        fetch(`http://localhost:5000/users/${user[0]._id}/add_to_cart/${id}`,{
+        const x={
+            item:id,
+            userId:user[0]._id
+        }
+        fetch(`http://localhost:5000/cart`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
             },
-            
+            body:JSON.stringify(x)
+        }).then(async()=>{
+            const data=await fetch(`http://localhost:5000/cart/userId/${user[0]._id}`);
+            const res=await data.json();
+            //console.log(res)
+            setCartId(res[res.length-1]._id);
         })
     }
+    
+    useEffect(()=>{
+        if(cartId!==""){
+            fetch(`http://localhost:5000/users/${user[0]._id}/add_to_cart/${cartId}`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            }).then(()=>{
+                setCartId("");
+            })
+        }
+    },)
+    console.log(cartId)
   return (
     <div>
         <form onSubmit={formSubmit} action="">
