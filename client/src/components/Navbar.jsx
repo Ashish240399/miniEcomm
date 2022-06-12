@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Navbar() {
   return (
-    <div>
+    <div style={{textAlign:"center"}}>
       <Link to="/">Home</Link>
         <Link to="/register">Register</Link>
         <Link to="/user">User</Link>

@@ -28,6 +28,22 @@ router.get("/:id",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
+router.get("/:id/cart",async(req,res)=>{
+    try {
+        const user=await User.findById(req.params.id).populate({path:"cart_item",populate:{path:"item"}}).lean().exec();
+        return res.status(200).send(user)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+})
+router.get("/:id/address",async(req,res)=>{
+    try {
+        const user=await User.findById(req.params.id).populate({path:"address"}).lean().exec();
+        return res.status(200).send(user)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+})
 router.post("/:id/address/:add_id",async(req,res)=>{
     try {
         const addressOne=await Address.findById(req.params.add_id).lean().exec()

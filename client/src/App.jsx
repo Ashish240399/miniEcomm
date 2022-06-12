@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import Register from './components/Register';
 import Navbar from './components/Navbar';
 import { Route, Routes } from 'react-router-dom';
@@ -9,10 +9,11 @@ import Category from './components/Category';
 import Brand from './components/Brand';
 import Home from './components/Home';
 import AllBrands from './components/AllBrands';
+import Order from './components/Order';
 
 function App() {
   return (
-    <div className="App">
+    <div style={{width:"90vw",margin:"auto"}} className="App">
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}></Route>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/category" element={<Category/>}></Route>
         <Route path="/brand" element={<Brand/>}></Route>
         <Route path="/all_brands" element={<AllBrands/>}></Route>
+        <Route path="/order" element={<Order/>}></Route>
       </Routes>
       
     </div>

@@ -10,11 +10,12 @@ function ShowAddress() {
     },[])
     console.log(userId[0]._id)
     async function getAdd(){
-        const data=await fetch(`http://localhost:5000/users/${userId[0]._id}`);
+        const data=await fetch(`http://localhost:5000/users/${userId[0]._id}/address`);
         const res=await data.json();
+        //console.log(res)
         setShow(res.address);
     }
-    console.log(show)
+    //console.log(show)
   return (
     <div>
         {show!==undefined && show.map((el)=>(

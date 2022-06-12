@@ -2,23 +2,28 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from "axios"
+import {Link} from "react-router-dom"
 function Cart() {
   let user=JSON.parse(localStorage.getItem("user"));
   const [cart,setCart]=useState();
   const [cartId,setCartId]=useState("")
   const cartItems=[];
+  const [totalPrice,setTotalPrice]=useState(0)
   const removeCartId=[];
   const addCartId=[]
   const obj={};
   const userid=(user[0]._id)
   async function getCart(){
-    const data=await fetch(`http://localhost:5000/users/${user[0]._id}`);
+    const data=await fetch(`http://localhost:5000/users/${user[0]._id}/cart`);
     const res=await data.json();
-    //console.log(res.cart_item)
+    console.log(res.cart_item)
+    let sum=0
+    for(var i=0;i<res.cart_item.length;i++){
+      sum+=res.cart_item[i].item.price;
+    }
+    setTotalPrice(sum);
     setCart(res.cart_item)
   }
-  console.log(cart)
-  // console.log(cart)
   if(cart!==undefined){
     for(var i=0;i<cart.length;i++){
       if(cart[i].item!==null){
@@ -111,6 +116,10 @@ function Cart() {
             }}><b>-</b></button></p>
           </div>
       ))}
+      <div>Total Price : {totalPrice}</div>
+      <Link to="/order"><button>Place Order</button></Link>
+      
+      
     </div>
   )
 }
