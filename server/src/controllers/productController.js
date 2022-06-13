@@ -3,6 +3,7 @@ const Category = require("../models/categorySchema");
 
 const router=express.Router();
 const Product=require("../models/productSchema");
+const Review = require("../models/reviewSchema");
 const Type = require("../models/typeSchema");
 const Wear = require("../models/wearPositionSchema");
 router.post("/",async(req,res)=>{
@@ -103,9 +104,13 @@ router.get("/wear/:wear_id/type/:type_id",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
-router.post("/:id/review/rev_id",async(req,res)=>{
+router.post("/:id/review/:rev_id",async(req,res)=>{
+    
     try {
-        const product=await Product.updateOne({_id:req.params.id},{reviews:req.params.rev_id});
+        //console.log("yes")
+        const review=await Review.findById(req.params.rev_id)
+        console.log(review)
+        const product=await Product.updateOne({_id:req.params.id},{$push:{reviews:review}});
         return res.send(product)
     } catch (error) {
         return res.send(error)

@@ -10,6 +10,7 @@ const wearController=require("./src/controllers/wearPositionController")
 const typeController=require("./src/controllers/typeControlle")
 const reviewController=require("./src/controllers/reviewController")
 const cartController=require("./src/controllers/cartController")
+const orderController=require("./src/controllers/orderController")
 app.use(express.json());
 app.use(cors());
 app.use("/users",userController)
@@ -21,4 +22,5 @@ app.use("/position",wearController);
 app.use("/type",typeController);
 app.use("/review",reviewController);
 app.use("/cart",cartController);
+app.use("/order",orderController)
 module.exports=app;

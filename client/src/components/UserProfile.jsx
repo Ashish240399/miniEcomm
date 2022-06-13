@@ -1,22 +1,29 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Address from './Address'
 import Cart from './Cart'
+import OrderList from './OrderList'
 import ShowAddress from './ShowAddress'
-
+import "./User.css"
 function UserProfile() {
     const [page,setPage]=useState("")
+    const navigate=useNavigate()
   return (
-    <div>
+    <div className='user'>
+      <h2>User's Details</h2>
         <button onClick={()=>{
-            setPage("cart")
+          navigate("/cart")
         }}>Cart</button>
         <button onClick={()=>{
-            setPage("address")
+            navigate("/address")
         }}>Add Address</button>
         <button onClick={()=>{
-          setPage("show-address")
+          navigate("/show-address")
         }}>Show Address</button>
-        {page=="cart"?<Cart/>:page=="address"?<Address/>:page=="show-address"?<ShowAddress/>:null}
+        <button onClick={()=>{
+          navigate("/order-list")
+        }}>Ordered List</button>
+        
     </div>
   )
 }

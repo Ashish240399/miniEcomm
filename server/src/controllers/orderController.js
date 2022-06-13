@@ -18,9 +18,9 @@ router.get("/",async(req,res)=>{
         return res.send(error)
     }
 })
-router.get("/:id",async(req,res)=>{
+router.get("/:userId",async(req,res)=>{
     try {
-        const order=await Order.findById(req.params.id).lean().exec();
+        const order=await Order.find({userId:req.params.userId}).lean().exec();
         return res.send(order);
     } catch (error) {
         return res.send(error)

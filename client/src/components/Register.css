@@ -1,0 +1,21 @@
+.register{
+    width:35%;
+    margin: auto;
+    border:1px solid gray;
+    margin-top: 5%;
+    text-align: center;
+    padding:20px;
+}
+.register>form>.input{
+    width:90%;
+    margin-top: 10px;
+    padding:10px;
+}
+.btn{
+    width:50%;
+    margin-top: 20px;
+    padding:12px 0px;
+    background-color: orange;
+    border:none;
+    font-size: 18px;
+}

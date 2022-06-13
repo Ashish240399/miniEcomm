@@ -1,0 +1,17 @@
+.user{
+    width:35%;
+    margin: auto;
+    margin-top: 5%;
+    text-align: center;
+    border:1px solid gray;
+    display: flex;
+    flex-direction: column;
+    padding:20px;
+}
+.user>button{
+    background-color: orange;
+    font-size: 18px;
+    padding:15px 0px;
+    margin-top: 10px;
+    border:none
+}

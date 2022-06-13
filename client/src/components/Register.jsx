@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import "./Register.css"
 import axios from "axios"
 function Register() {
     const [form,setForm]=useState(
@@ -34,13 +34,13 @@ function Register() {
     //console.log(form)
     
   return (
-    <div>
+    <div className='register'>
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>
-            <input onChange={handleChange} id='name' type="text" />
-            <input onChange={handleChange} id='email' type="text" />
-            <input onChange={handleChange} id='password' type="text" />
-            <input type='submit'/>
+            <input className='input' onChange={handleChange} id='name' type="text" placeholder='Enter Name'/>
+            <input className='input' onChange={handleChange} id='email' type="text" placeholder='Enter email'/>
+            <input className='input' onChange={handleChange} id='password' type="text" placeholder='Enter Password'/>
+            <input className='btn' type='submit'/>
         </form>
     </div>
   )

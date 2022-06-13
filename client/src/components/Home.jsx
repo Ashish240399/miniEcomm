@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react'
-
+import "./Home.css"
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 function Home() {
     let user=JSON.parse(localStorage.getItem("user"));
+    const navigate=useNavigate();
     const [data,setData]=useState()
     const [category,setCategory]=useState();
     const [position,setPosition]=useState()
@@ -12,8 +14,6 @@ function Home() {
         positionId:"",
         typeId:""
     })
-    
-    
     async function getData(){
         const product=await fetch("http://localhost:5000/products");
         const res=await product.json();
@@ -109,8 +109,11 @@ function Home() {
         }
     },)
     console.log(cartId)
+    function goToProductPage(){
+        navigate("/single-product")
+    }
   return (
-    <div>
+    <div className='home'>
         <form onSubmit={formSubmit} action="">
             <select onChange={handleChange} id="categoryId">
                 <option value="">Category</option>
@@ -132,17 +135,28 @@ function Home() {
             </select>
             <input type="submit" />
         </form>
-        
-        {data!=undefined && data.map((el)=>(
-            <div>
+        <div className='product-container'>
+            {data!=undefined && data.map((el)=>(
+            <div  className='itemCard'>
                 {/* <img src={el.images[0]}/> */}
-                <p>{el.title}  <span>
-                        <button onClick={()=>{
-                            addToCart(el._id)
-                        }}>Add to cart</button>
-                    </span></p>
+                
+                <div onClick={()=>{
+                    localStorage.setItem("productDetails",JSON.stringify(el))
+                    goToProductPage()
+                }}>
+                    <img src={el.image}/>
+                    <div >{el.title}</div>
+                    <p><b>Price : </b>Rs {el.price}</p>
+                </div>
+                
+                <button onClick={()=>{
+                    addToCart(el._id)
+                }}>Add to cart</button>
+                
             </div>
         ))}
+        </div>
+        
     </div>
   )
 }

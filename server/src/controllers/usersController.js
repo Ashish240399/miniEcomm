@@ -22,7 +22,7 @@ router.get("/",async(req,res)=>{
 })
 router.get("/:id",async(req,res)=>{
     try {
-        const user=await User.findById(req.params.id).populate({path:"address cart_item",populate:{path:"item"}}).lean().exec();
+        const user=await User.findById(req.params.id).populate({path:"address cart_item"}).lean().exec();
         return res.status(200).send(user)
     } catch (error) {
         return res.status(400).send(error)
@@ -36,6 +36,7 @@ router.get("/:id/cart",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
+
 router.get("/:id/address",async(req,res)=>{
     try {
         const user=await User.findById(req.params.id).populate({path:"address"}).lean().exec();
@@ -80,6 +81,16 @@ router.patch("/:id/address/idx/edit",async(req,res)=>{
         return res.status(201).send(user)
     } catch (error) {
         return res.status(400).send(error)
+    }
+})
+router.post(":id/orderlist",async(req,res)=>{
+    try {
+        const item=await req.body;
+        console.log(item)
+        // const user=await User.updateOne({_id:req.params.id},{$push:{ordered_item:{$each:req.body}}})
+        // return res.send(user);
+    } catch (error) {
+        return res.send(error)
     }
 })
 module.exports=router;
